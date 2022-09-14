@@ -4,5 +4,4 @@ from receitas.views import home
 
 urlpatterns = [
     path('', home),  # Home
-    
 ]
