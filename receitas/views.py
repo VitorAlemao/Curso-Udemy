@@ -11,7 +11,7 @@ def home(request):
     })
 
 
-def receitas(request, id):
+def receita(request, id):
     return render(request, 'pages/receitas-view.html', context={
         'receita': make_recipe(),
     })
