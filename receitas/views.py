@@ -14,4 +14,5 @@ def home(request):
 def receita(request, id):
     return render(request, 'pages/receitas-view.html', context={
         'receita': make_recipe(),
+        'is_detail_page': True,
     })
