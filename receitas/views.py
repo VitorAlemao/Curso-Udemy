@@ -1,6 +1,5 @@
 
 from django.shortcuts import get_list_or_404, render
-from Utils.receitas.Factory import make_recipe
 
 from .models import Recipe
 
@@ -30,7 +29,12 @@ def category(request, category_id):
 
 
 def receita(request, id):
+    recipe = Recipe.objects.filter(
+        pk=id,
+        is_published=True,
+    ).order_by('-id').first()
+
     return render(request, 'pages/receitas-view.html', context={
-        'receita': make_recipe(),
+        'receita': recipe,
         'is_detail_page': True,
     })
