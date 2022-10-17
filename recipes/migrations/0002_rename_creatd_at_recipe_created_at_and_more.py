@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('receitas', '0001_initial'),
+        ('recipes', '0001_initial'),
     ]
 
     operations = [
@@ -23,6 +23,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='recipe',
             name='cover',
-            field=models.ImageField(blank=True, default='', upload_to='recipes/covers/%Y/%m/%d/'),
+            field=models.ImageField(
+                blank=True, default='', upload_to='recipes/covers/%Y/%m/%d/'),
         ),
     ]

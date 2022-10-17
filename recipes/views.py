@@ -12,7 +12,7 @@ def home(request):
     ).order_by('-id')
 
     return render(request, 'pages/home.html', context={
-        'receitas': recipes,
+        'recipes': recipes,
     })
 
 
@@ -24,15 +24,15 @@ def category(request, category_id):
         ).order_by('-id'))
 
     return render(request, 'pages/category.html', context={
-        'receitas': recipes,
+        'recipes': recipes,
         'title': f'{recipes[0].category.name} - Category |'
     })
 
 
-def receita(request, id):
+def recipe(request, id):
     recipe = get_object_or_404(Recipe, pk=id, is_published=True,)
 
-    return render(request, 'pages/receitas-view.html', context={
-        'receita': recipe,
+    return render(request, 'pages/recipes-view.html', context={
+        'recipe': recipe,
         'is_detail_page': True,
     })
