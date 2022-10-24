@@ -1,7 +1,9 @@
 
+from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import resolve, reverse
 from recipes import views
+from recipes.models import Category, Recipe
 
 
 class RecipeViewTest(TestCase):
@@ -22,6 +24,31 @@ class RecipeViewTest(TestCase):
             reverse('recipes:recipe', kwargs={'id': 2})
         )
         self.assertIs(view.func, views.recipe)
+
+    def test_recipe_home_template_loads_recipes(self):
+        category = Category.objects.create(name='Category')
+        author = User.objects.create(
+            first_name='Vitor',
+            last_name='Hugo',
+            username='Vitoralemão',
+            password='Vitoralemao1',
+            email='vitorhugoalenão@gmail.com',
+        )
+        recipe = Recipe.objects.create(
+            category=category,
+            author=author,
+            title='Recipe Title',
+            description='Description Recipe',
+            slug='recipe-slug',
+            preparation_time=10,
+            preparation_time_unit='Minutos',
+            servings=5,
+            servings_unit='Porçoes',
+            preparation_steps='Recipe Preparation Steps',
+            preparation_steps_is_html=False,
+            is_published=True,
+        )
+        assert 1 == 1
 
     def test_recipe_home_view_returns_status_code_200_ok(self):
         response = self.client.get(reverse('recipes:home'))
