@@ -1,12 +1,14 @@
-
-from django.contrib.auth.models import User
-from django.test import TestCase
 from django.urls import resolve, reverse
 from recipes import views
-from recipes.models import Category, Recipe
+
+from .test_recipe_base import RecipeTestBase
 
 
-class RecipeViewTest(TestCase):
+class RecipeViewTest(RecipeTestBase):
+
+    def tearDown(self) -> None:
+        return super().tearDown()
+
     def test_recipe_home_view_function_is_correct(self):
         view = resolve(
             reverse('recipes:home')
@@ -26,28 +28,6 @@ class RecipeViewTest(TestCase):
         self.assertIs(view.func, views.recipe)
 
     def test_recipe_home_template_loads_recipes(self):
-        category = Category.objects.create(name='Category')
-        author = User.objects.create(
-            first_name='Vitor',
-            last_name='Hugo',
-            username='Vitoralemão',
-            password='Vitoralemao1',
-            email='vitorhugoalenão@gmail.com',
-        )
-        recipe = Recipe.objects.create(
-            category=category,
-            author=author,
-            title='Recipe Title',
-            description='Description Recipe',
-            slug='recipe-slug',
-            preparation_time=10,
-            preparation_time_unit='Minutos',
-            servings=5,
-            servings_unit='Porçoes',
-            preparation_steps='Recipe Preparation Steps',
-            preparation_steps_is_html=False,
-            is_published=True,
-        )
         response = self.client.get(reverse('recipes:home'))
         content = response.content.decode('utf-8')
         response_context_recipes = response.context['recipes']
