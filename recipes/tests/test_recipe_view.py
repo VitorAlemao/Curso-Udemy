@@ -26,9 +26,7 @@ class RecipeViewTest(RecipeTestBase):
 
     def test_recipe_home_template_loads_recipes(self):
         # Need a recipe for this test
-        self.make_recipe(category_data={
-            'name': 'Jantar'
-        })
+        self.make_recipe()
         response = self.client.get(reverse('recipes:home'))
         content = response.content.decode('utf-8')
         response_context_recipes = response.context['recipes']
@@ -36,6 +34,19 @@ class RecipeViewTest(RecipeTestBase):
         # Check if one recipe exists
         self.assertIn('Recipe Title', content)
         self.assertEqual(len(response_context_recipes), 1)
+
+    def test_recipe_home_template_dont_load_recipes_not_published(self):
+        """Test recipe is_published False dont show"""
+        # Need a recipe for this test
+        self.make_recipe(is_published=False)
+
+        response = self.client.get(reverse('recipes:home'))
+
+        # Check if one recipe exists
+        self.assertIn(
+            'No recipes found here',
+            response.content.decode('utf-8')
+        )
 
     def test_recipe_category_template_loads_recipes(self):
         needed_title = 'This is a category test'
