@@ -125,4 +125,4 @@ class RecipeViewTest(RecipeTestBase):
 
     def test_recipe_search_loads_correct_template(self):
         response = self.client.get(reverse('recipes:search'))
-        self.assertTemplateUsed(response, 'recipes/pages/search.html')
+        self.assertTemplateUsed(response, 'pages/search.html')
