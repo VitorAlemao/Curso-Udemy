@@ -45,6 +45,6 @@ def search(request):
         raise Http404()
 
     return render(request, 'pages/search.html', {
-        'page_title': f'Seach for "{search_term}" |',
+        'page_title': f'Search for "{search_term}" |',
         'search_term': search_term,
     })
