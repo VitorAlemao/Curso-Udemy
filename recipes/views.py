@@ -1,3 +1,5 @@
+import os
+
 from django.db.models import Q
 from django.http.response import Http404
 from django.shortcuts import get_list_or_404, get_object_or_404, render
@@ -6,9 +8,7 @@ from Utils.pagination import make_pagination
 
 from .models import Recipe
 
-import os
-
-PER_PAGE = os.environ.get('PER_PAGE', 6)
+PER_PAGE = int(os.environ.get('PER_PAGE', 6))
 
 
 def home(request):
